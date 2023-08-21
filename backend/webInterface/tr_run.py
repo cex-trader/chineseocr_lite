@@ -51,7 +51,7 @@ class TrRun(tornado.web.RequestHandler):
         img_up = self.request.files.get('file', None)
         img_b64 = self.get_argument('img', None)
         compress_size = self.get_argument('compress', None)
-        is_draw = self.get_argument('is_raw', None)
+        is_draw = self.get_argument('is_draw', None)
 
         # 判断是上传的图片还是base64
         self.set_header('content-type', 'application/json')
