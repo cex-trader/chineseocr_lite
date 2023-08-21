@@ -17,10 +17,10 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ocr_lite:$(date +%s)
     - name: Push to GitHub Packages
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v2
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: cex-trader/ocr-lite
+        repository: cex-trader/chineseocr_lite/chineseocr-lite
         tag_with_ref: true
