@@ -51,6 +51,7 @@ class TrRun(tornado.web.RequestHandler):
         img_up = self.request.files.get('file', None)
         img_b64 = self.get_argument('img', None)
         compress_size = self.get_argument('compress', None)
+        is_draw = self.get_argument('is_raw', None)
 
         # 判断是上传的图片还是base64
         self.set_header('content-type', 'application/json')
@@ -176,9 +177,16 @@ class TrRun(tornado.web.RequestHandler):
             'time': time_now
         }
         logger.info(json.dumps(log_info, cls=NpEncoder))
-        self.finish(json.dumps(
-            {'code': 200, 'msg': '成功',
-             'data': {'img_detected': 'data:image/jpeg;base64,' + img_detected_b64, 'raw_out': res,
-                      'speed_time': round(time.time() - start_time, 2)}},
-            cls=NpEncoder))
+        if is_draw != '0':
+            self.finish(json.dumps(
+                {'code': 200, 'msg': '成功',
+                 'data': {'img_detected': 'data:image/jpeg;base64,' + img_detected_b64, 'raw_out': res,
+                          'speed_time': round(time.time() - start_time, 2)}},
+                cls=NpEncoder))
+        else:
+            self.finish(json.dumps(
+                {'code': 200, 'msg': '成功',
+                 'data': {'raw_out': res,
+                          'speed_time': round(time.time() - start_time, 2)}},
+                cls=NpEncoder))
         return
